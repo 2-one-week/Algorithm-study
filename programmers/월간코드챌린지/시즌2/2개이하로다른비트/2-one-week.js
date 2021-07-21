@@ -1,13 +1,18 @@
-const solution = (left, right) => {
-  let answer = 0;
-  for (let num = left; num <= right; num++) {
-    let count = 0;
-    for (let divider = 1; divider <= num; divider++) {
-      if (num % divider === 0) {
-        count++;
-      }
+const solution = (numbers) => {
+  return numbers.map((number) => {
+    let startNumber = number;
+    while (true) {
+      startNumber++;
+      const numOfDiffBits = String((startNumber ^ number).toString(2)).match(
+        /1/g,
+      ).length;
+      if (numOfDiffBits > 2) continue;
+      else break;
     }
-    count % 2 === 0 ? (answer += num) : (answer -= num);
-  }
-  return answer;
+    return startNumber;
+  });
 };
+
+//  10, 11번 시간 초과로 틀림
+// 짝수면 맨끝 0이니까 1로 바꿔줌
+// 홀수면 경우의 수에 따라 바꿔주면 될듯
